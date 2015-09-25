@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import project.dao.EffortDao;
 import project.dao.ProjectDao;
+import project.model.Effort;
 import project.model.Project;
 
 @Controller
@@ -149,4 +151,5 @@ public class ProjectController {
 		}
 	}
 	
+
 }

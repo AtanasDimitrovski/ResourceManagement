@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.model.Employee;
+import project.model.Project;
 import project.service.EmployeeService;
 
 @RestController
@@ -56,5 +57,21 @@ public class EmployeeResource {
 		employeeService.changeJobDescription(id, jobDescription);
 	}
 	
+	@RequestMapping(value = "/{id}/projects", method = RequestMethod.GET, produces = "application/json")
+	public List<Project> getProjects(@PathVariable long id){
+		return employeeService.getProjects(id);
+	}
+	
+	@RequestMapping(value = "/{id}/projects/{projectId}", method = RequestMethod.DELETE)
+	public void removeProjectFromEmployee(@PathVariable long id, @PathVariable long projectId){
+		employeeService.removeProject(id, projectId);
+	}
+	
+	@RequestMapping(value = "/{id}/projects", method = RequestMethod.POST, produces = "application/json")
+	public void addProject(@PathVariable long id, @RequestParam("projectId") long projectId, @RequestParam("percent") int percent){
+		employeeService.addProject(id, projectId, percent);
+	}
+	
+
 	
 }

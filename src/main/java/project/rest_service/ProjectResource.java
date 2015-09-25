@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.model.Effort;
+import project.model.Employee;
 import project.model.Project;
+import project.service.EmployeeService;
 import project.service.ProjectService;
 
 @RestController
@@ -19,6 +22,7 @@ public class ProjectResource {
 	
 	@Autowired
 	private ProjectService projectService;
+
 	
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public List<Project> getProjects(){
@@ -65,4 +69,35 @@ public class ProjectResource {
 	public void changeToDate(@PathVariable long id, @RequestParam Date to){
 		projectService.changeToDate(id, to);
 	}
+	
+	@RequestMapping(value = "/{id}/employees", method = RequestMethod.GET, produces = "application/json")
+	public List<Employee> getEmployees(@PathVariable long id){
+		return projectService.getEmployees(id);
+	}
+	
+	@RequestMapping(value = "/{id}/employees/{employeeId}", method = RequestMethod.DELETE)
+	public void removeEmployeeFromProject(@PathVariable long id, @PathVariable long employeeId){
+		projectService.removeEmployee(id, employeeId);
+	}
+	
+	@RequestMapping(value = "/{id}/employees", method = RequestMethod.POST, produces = "application/json")
+	public void addEmployee(@PathVariable long id, @RequestParam("employeeId") long employeeId, @RequestParam("percent") int percent){
+		projectService.addEmployee(id, employeeId, percent);
+	}
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+

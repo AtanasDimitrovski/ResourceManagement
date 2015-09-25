@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 
 import project.dao.EmployeeDao;
 import project.model.Employee;
+import project.model.Project;
 
 @Controller
 public class EmployeeController {
@@ -109,7 +110,5 @@ public class EmployeeController {
 		} catch (Exception e) {
 			return null;
 		}
-	}
-	
-	
+	}	
 }
