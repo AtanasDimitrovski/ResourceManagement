@@ -27,12 +27,4 @@ public class MainController {
 		return employeeService.getEmployee(id).getName();
 	}
 	
-	@RequestMapping("/test")
-	@ResponseBody
-	public User index(){
-		
-		User user = userService.getUser(3);
-		return user;
-		
-	}
 }	

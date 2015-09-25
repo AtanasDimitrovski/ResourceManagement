@@ -1,5 +1,8 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +19,13 @@ public class UserController {
 	@Autowired
 	private UserDao userDao;
 
-	public boolean create(String username){
+	public boolean create(String username, String password){
 				
 		try {
 			
 			User user = new User();
 			user.setUsername(username);
-			user.setPassword("pasvord");
+			user.setPassword(password);
 			user.setRole(User.Role.ROLE_USER);
 			userDao.save(user);
 			
@@ -83,7 +86,7 @@ public class UserController {
 		return true;
 	}
 	
-	public User read(long id){	
+	public User get(long id){	
 		try {
 			return userDao.getOne(id);
 		} catch (Exception e) {
@@ -92,4 +95,11 @@ public class UserController {
 		}
 	}
 	
+	public List<User> getAll(){
+		try {
+			return userDao.findAll();
+		} catch (Exception e) {
+			return new ArrayList<User>();
+		}
+	}
 }
