@@ -46,10 +46,10 @@ public class EffortController {
 		return true;
 	}
 	
-	public boolean changeProject(long project_id, long effort_id){
+	public boolean changeProject(long projectId, long effortId){
 		try {
-			Effort effort = effortDao.getOne(effort_id);
-			effort.setProject(projectDao.getOne(project_id));
+			Effort effort = effortDao.getOne(effortId);
+			effort.setProject(projectDao.getOne(projectId));
 			effortDao.saveAndFlush(effort);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -58,10 +58,10 @@ public class EffortController {
 		return true;
 	}
 	
-	public boolean changeEmployee(long employe_id, long effort_id){
+	public boolean changeEmployee(long employeId, long effortId){
 		try {
-			Effort effort = effortDao.getOne(effort_id);
-			effort.setEmployee(employeeDao.getOne(employe_id));
+			Effort effort = effortDao.getOne(effortId);
+			effort.setEmployee(employeeDao.getOne(employeId));
 			effortDao.saveAndFlush(effort);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -129,5 +129,14 @@ public class EffortController {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	
+	public List<Effort> getAll(){
+		return effortDao.findAll();
+	}
+	
+	public Effort get(long id){
+		return effortDao.findOne(id);
 	}
 }
