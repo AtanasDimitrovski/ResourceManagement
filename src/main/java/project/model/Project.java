@@ -1,5 +1,6 @@
 package project.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -30,6 +32,10 @@ public class Project extends BaseEntity{
 	private String status;
 	
 	private short valid;
+	
+	public Project(){
+		
+	}
 	
 	@OneToMany(mappedBy = "project")
 	@JsonBackReference

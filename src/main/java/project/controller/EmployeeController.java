@@ -17,24 +17,17 @@ public class EmployeeController {
 	private EmployeeDao employeeDao;
 	
 	
-	public boolean create(String name, String lastName, String jobDesc){
+	public boolean create(Employee employee){
 		
 		try {
-			
-			Employee employee = new Employee();
-			employee.setName(name);
-			employee.setLastName(lastName);
-			employee.setJobDescription(jobDesc);
 			short a = 1;
 			employee.setValid(a);
 			employeeDao.save(employee);
-			
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return false;
-		}
-		return true;
-		
+		}		
 	}
 	
 	public boolean updateName(long id, String name){
@@ -109,6 +102,24 @@ public class EmployeeController {
 			return employeeDao.findByValid(valid);
 		} catch (Exception e) {
 			return null;
+		}
+	}
+
+	public boolean edit(long id, String name, String lastName, String jobDescription) {
+		// TODO Auto-generated method stub
+		try {
+			Employee employee = employeeDao.getOne(id);
+			if (name != null)
+				employee.setName(name);
+			if (lastName != null)
+				employee.setLastName(lastName);
+			if (jobDescription != null)
+				employee.setJobDescription(jobDescription);
+			employeeDao.saveAndFlush(employee);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
 		}
 	}	
 }

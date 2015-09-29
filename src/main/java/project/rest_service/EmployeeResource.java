@@ -2,13 +2,20 @@ package project.rest_service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import project.model.Employee;
 import project.model.Project;
@@ -37,26 +44,15 @@ public class EmployeeResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
-	public void createEmployee(@RequestParam("name") String name,
-			@RequestParam("lastName") String lastName, @RequestParam("jobDescription") String jobDescription){
-		employeeService.createEmployee(name, lastName, jobDescription);
+	public void createEmployee(@RequestBody Employee employee){
+		employeeService.createEmployee(employee);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public void changeName(@PathVariable long id, @RequestParam("name") String name){
-		employeeService.changeName(id, name);
+	public void editEmployee(@PathVariable long id, @RequestBody Employee employee){
+		employeeService.editEmployee(id, employee.getName(), employee.getLastName(), employee.getJobDescription());
 	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json", params = "lastName")
-	public void changeLastName(@PathVariable long id, @RequestParam String lastName){
-		employeeService.changeLastName(id, lastName);
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json", params = "jobDescription")
-	public void changeJobDescription(@PathVariable long id, @RequestParam String jobDescription){
-		employeeService.changeJobDescription(id, jobDescription);
-	}
-	
+			
 	@RequestMapping(value = "/{id}/projects", method = RequestMethod.GET, produces = "application/json")
 	public List<Project> getProjects(@PathVariable long id){
 		return employeeService.getProjects(id);

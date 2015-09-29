@@ -46,8 +46,12 @@ public class EmployeeService {
 		return employeeController.updateLastName(id, lastName);
 	}
 	
-	public boolean createEmployee(String name, String lastName, String jobDescription){
-		return employeeController.create(name, lastName, jobDescription);
+	public boolean createEmployee(Employee employee){
+		return employeeController.create(employee);
+	}
+	
+	public boolean editEmployee(long id, String name, String lastName, String jobDescription){
+		return employeeController.edit(id, name, lastName, jobDescription);
 	}
 	
 	public List<Project> getProjects(long id){
