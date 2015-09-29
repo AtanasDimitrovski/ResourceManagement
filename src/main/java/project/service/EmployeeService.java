@@ -58,7 +58,8 @@ public class EmployeeService {
 		List<Effort> efforts = effortController.getProjectsByEmployeeId(id);
 		List<Project> projects = new ArrayList<Project>();
 		for (Effort effort : efforts) {
-			projects.add(effort.getProject());
+			if (effort.getProject().getValid() == 1)
+				projects.add(effort.getProject());
 		}
 		return projects;
 	}

@@ -17,18 +17,11 @@ public class ProjectController {
 	@Autowired
 	private ProjectDao projectDao;
 		
-	public boolean create(String name, String description, Date from ,Date to, String status){
+	public boolean create(Project project){
 		
 		try {
-			Project project = new Project();
-			project.setName(name);
-			project.setDescription(description);
-			project.setFromDate(from);
-			project.setToDate(to);
-			project.setStatus(status);
 			short valid = 1;
-			project.setValid(valid);
-			
+			project.setValid(valid);			
 			projectDao.save(project);
 			
 		} catch (Exception e) {
@@ -148,6 +141,28 @@ public class ProjectController {
 			return projectDao.findByValid(valid);
 		} catch (Exception e) {
 			return null;
+		}
+	}
+
+	public boolean edit(long id, String name, String description,
+			Date fromDate, Date toDate, String status) {
+		try {
+			Project project = projectDao.getOne(id);
+			if (name != null)
+				project.setName(name);
+			if (description != null)
+				project.setDescription(description);
+			if (fromDate != null)
+				project.setFromDate(fromDate);
+			if (toDate != null)
+				project.setToDate(toDate);
+			if (status != null)
+				project.setStatus(status);
+			projectDao.saveAndFlush(project);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
 		}
 	}
 	

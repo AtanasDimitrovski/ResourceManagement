@@ -35,8 +35,12 @@ public class ProjectService {
 		return projectController.delete(id);
 	}
 	
-	public boolean createProject(String name, String description, String status, Date from, Date to){
-		return projectController.create(name, description, from, to, status);
+	public boolean createProject(Project project){
+		return projectController.create(project);
+	}
+	
+	public boolean editProject(long id, String name, String description, Date fromDate, Date toDate, String status){
+		return projectController.edit(id, name, description, fromDate, toDate, status);
 	}
 	
 	public boolean changeName(long id, String name){
@@ -63,8 +67,8 @@ public class ProjectService {
 		List<Effort> efforts = effortController.getEmployeesByProjectId(id);
 		List<Employee> employees = new ArrayList<Employee>();
 		for (Effort effort : efforts) {
-			System.out.println(effort.getId());
-			employees.add(effort.getEmployee());
+			if (effort.getEmployee().getValid() == 1)
+				employees.add(effort.getEmployee());
 		}
 		return employees;
 	}

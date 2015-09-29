@@ -1,6 +1,8 @@
-package project.model;
+package project.deserializers;
 
 import java.io.IOException;
+
+import project.model.Employee;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
