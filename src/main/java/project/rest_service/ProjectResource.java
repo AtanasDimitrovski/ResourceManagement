@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.model.EffortInformation;
 import project.model.Employee;
 import project.model.Project;
 import project.service.ProjectService;
@@ -70,6 +71,16 @@ public class ProjectResource {
 		return projectService.getManager(id);
 	}
 	
+	@RequestMapping(value = "/{id}/employees/{employeeId}/effort", method = RequestMethod.GET, produces = "application/json")
+	public List<EffortInformation> getEffortInformation(@PathVariable long id, @PathVariable long employeeId){
+		return projectService.getEffortInformation(id, employeeId);
+	}
+	
+	@RequestMapping(value = "/{id}/employees/{employeeId}/effort", method = RequestMethod.POST)
+	public void addEffortInformation(@PathVariable long id, @PathVariable long employeeId, @RequestBody EffortInformation effortInformation){
+		System.out.println(effortInformation.getPercent());
+		projectService.addEffortInformation(id, employeeId, effortInformation);
+	}
 	
 }
 

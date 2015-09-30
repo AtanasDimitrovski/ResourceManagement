@@ -10,12 +10,18 @@ import javax.persistence.Enumerated;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import project.deserializers.EffortInformationDeserializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonDeserialize(using = EffortInformationDeserializer.class)
 public class EffortInformation extends BaseEntity {
 
 	
@@ -23,8 +29,10 @@ public class EffortInformation extends BaseEntity {
 		ROLE_BACKEND, ROLE_FRONTEND, ROLE_DESIGNER
 	}
 	
+	@Temporal(TemporalType.DATE)
 	private Date fromDate;
 	
+	@Temporal(TemporalType.DATE)
 	private Date toDate;
 	
 	private int percent;

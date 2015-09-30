@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.controller.EffortController;
+import project.controller.EffortInformationController;
 import project.controller.ProjectController;
 import project.model.Effort;
+import project.model.EffortInformation;
 import project.model.Employee;
 import project.model.Project;
 
@@ -22,6 +24,9 @@ public class ProjectService {
 	
 	@Autowired
 	private EffortController effortController;
+	
+	@Autowired
+	private EffortInformationController effortInformationController;
 	
 	
 	public Project getProject(long id){
@@ -71,6 +76,18 @@ public class ProjectService {
 
 	public Employee getManager(long id) {
 		return projectController.getManager(id);
+	}
+	
+	public List<EffortInformation> getEffortInformation(long id, long employeeId){
+		Effort effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
+		return effortInformationController.getEffortInformationByEffortId(effort.getId());
+	}
+
+	public void addEffortInformation(long id, long employeeId,
+			EffortInformation effortInformation) {
+		 Effort effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
+		 effortInformation.setEffort(effort);
+		 effortInformationController.save(effortInformation);
 	}
 	
 }
