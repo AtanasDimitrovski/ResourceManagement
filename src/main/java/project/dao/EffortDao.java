@@ -8,7 +8,7 @@ import project.model.Effort;
 import project.model.Project;
 
 public interface EffortDao extends JpaRepository<Effort, Long> {
-	
+		
 	public List<Effort> findByProjectId(long id);
 
 	public List<Effort> findByEmployeeId(long id);

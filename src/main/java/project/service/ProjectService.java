@@ -24,43 +24,28 @@ public class ProjectService {
 	private EffortController effortController;
 	
 	public Project getProject(long id){
-		return projectController.get(id);
+		return projectController.findOne(id);
 	}
 	
 	public List<Project> getProjects(){
-		return projectController.getAll();
+		return projectController.findAll();
 	}
 	
-	public boolean delete(long id){
-		return projectController.delete(id);
+	public void delete(long id){
+		Project project = projectController.findOne(id);
+		short valid = 0;
+		project.setValid(valid);
+		projectController.saveAndFlush(project);
 	}
 	
-	public boolean createProject(Project project){
-		return projectController.create(project);
+	public Project createProject(Project project){
+		short valid = 1;
+		project.setValid(valid);
+		return projectController.save(project);
 	}
 	
-	public boolean editProject(long id, String name, String description, Date fromDate, Date toDate, String status){
+	public Project editProject(long id, String name, String description, Date fromDate, Date toDate, String status){
 		return projectController.edit(id, name, description, fromDate, toDate, status);
-	}
-	
-	public boolean changeName(long id, String name){
-		return projectController.updateName(id, name);
-	}
-	
-	public boolean changeDescription(long id, String description){
-		return projectController.updateDescription(id, description);
-	}
-	
-	public boolean changeStatus(long id, String status){
-		return projectController.updateStatus(id, status);
-	}
-	
-	public boolean changeFromDate(long id, Date from){
-		return projectController.changeFromDate(id, from);
-	}
-	
-	public boolean changeToDate(long id, Date to){
-		return projectController.changeToDate(id, to);
 	}
 	
 	public List<Employee> getEmployees(long id){
@@ -73,11 +58,9 @@ public class ProjectService {
 		return employees;
 	}
 	
-	public boolean removeEmployee(long projectId, long employeeId){
+	public void removeEmployee(long projectId, long employeeId){
 		Effort effort = effortController.getEffortByProjectAndEmployee(projectId, employeeId);
-		if (effort != null)
-			return effortController.delete(effort.getId());
-		return false;
+		effortController.delete(effort);
 	}
 	
 	

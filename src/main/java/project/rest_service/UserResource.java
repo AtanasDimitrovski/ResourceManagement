@@ -52,7 +52,7 @@ public class UserResource {
 			@RequestParam("password") String password,
 			@RequestParam("rememberMe") boolean rememberMe,
 			HttpServletRequest request, HttpServletResponse response) {
-
+		
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				username, password);
 		Authentication authentication = this.authManager

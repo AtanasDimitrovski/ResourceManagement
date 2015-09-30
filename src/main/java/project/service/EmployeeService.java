@@ -22,35 +22,29 @@ public class EmployeeService {
 	@Autowired
 	private EffortController effortController;
 	
+	
 	public Employee getEmployee(long id){
-		return employeeController.get(id);
+		return employeeController.findOne(id);
 	}
 	
 	public List<Employee> getEmployees(){
-		return employeeController.getAll();
+		return employeeController.findAll();
 	}
 	
-	public boolean deleteEmployee(long id){
-		return employeeController.delete(id);
+	public void deleteEmployee(long id){
+		Employee employee = employeeController.findOne(id);
+		short valid = 0;
+		employee.setValid(valid);
+		employeeController.saveAndFlush(employee);
+	}
+		
+	public Employee createEmployee(Employee employee){
+		short a = 1;
+		employee.setValid(a);
+		return employeeController.save(employee);
 	}
 	
-	public boolean changeJobDescription(long id, String jobDescription){
-		return employeeController.updateJobDescription(id, jobDescription);
-	}
-	
-	public boolean changeName(long id, String name){
-		return employeeController.updateName(id, name);
-	}
-	
-	public boolean changeLastName(long id, String lastName){
-		return employeeController.updateLastName(id, lastName);
-	}
-	
-	public boolean createEmployee(Employee employee){
-		return employeeController.create(employee);
-	}
-	
-	public boolean editEmployee(long id, String name, String lastName, String jobDescription){
+	public Employee editEmployee(long id, String name, String lastName, String jobDescription){
 		return employeeController.edit(id, name, lastName, jobDescription);
 	}
 	
@@ -64,11 +58,9 @@ public class EmployeeService {
 		return projects;
 	}
 	
-	public boolean removeProject(long employeeId, long projectId){
+	public void removeProject(long employeeId, long projectId){
 		Effort effort = effortController.getEffortByProjectAndEmployee(projectId, employeeId);
-		if (effort!=null)
-			return effortController.delete(effort.getId());
-		return false;
+		effortController.delete(effort);
 	} 
 	
 	

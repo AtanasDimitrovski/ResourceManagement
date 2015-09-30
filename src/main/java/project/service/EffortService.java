@@ -16,15 +16,15 @@ public class EffortService {
 	private EffortController effortController;
 	
 	public List<Effort> getAll(){
-		return effortController.getAll();
+		return effortController.findAll();
 	}
 	
 	public Effort get(long id){
-		return effortController.get(id);
+		return effortController.findOne(id);
 	}
 	
-	public boolean delete(long id){
-		return effortController.delete(id);
+	public void delete(long id){
+		effortController.delete(id);
 	}
 	
 	public boolean create(long employeeId, long projectId, int percent){
