@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import project.dao.EffortDao;
 import project.dao.ProjectDao;
 import project.model.Effort;
+import project.model.Employee;
 import project.model.Project;
 
 @Controller
@@ -29,9 +30,13 @@ public class ProjectController extends BaseController<Project, JpaRepository<Pro
 		short valid = 1;
 		return projectDao.findByValid(valid);
 	}
+	
+	public Employee getManager(long id){
+		return projectDao.findOne(id).getManager();
+	}
 
 	public Project edit(long id, String name, String description,
-			Date fromDate, Date toDate, String status) {
+			Date fromDate, Date toDate, String status, Employee manager) {
 		try {
 			Project project = projectDao.getOne(id);
 			if (name != null)
@@ -44,6 +49,8 @@ public class ProjectController extends BaseController<Project, JpaRepository<Pro
 				project.setToDate(toDate);
 			if (status != null)
 				project.setStatus(status);
+			if (manager != null)
+				project.setManager(manager);
 			return super.saveAndFlush(project);
 		} catch (Exception e) {
 			return null;

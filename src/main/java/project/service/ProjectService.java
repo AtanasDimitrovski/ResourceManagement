@@ -23,6 +23,7 @@ public class ProjectService {
 	@Autowired
 	private EffortController effortController;
 	
+	
 	public Project getProject(long id){
 		return projectController.findOne(id);
 	}
@@ -44,8 +45,8 @@ public class ProjectService {
 		return projectController.save(project);
 	}
 	
-	public Project editProject(long id, String name, String description, Date fromDate, Date toDate, String status){
-		return projectController.edit(id, name, description, fromDate, toDate, status);
+	public Project editProject(long id, String name, String description, Date fromDate, Date toDate, String status, Employee manager){
+		return projectController.edit(id, name, description, fromDate, toDate, status, manager);
 	}
 	
 	public List<Employee> getEmployees(long id){
@@ -66,6 +67,10 @@ public class ProjectService {
 	
 	public boolean addEmployee(long projectId, long employeeId, int percent){
 		return effortController.create(employeeId, projectId, percent);
+	}
+
+	public Employee getManager(long id) {
+		return projectController.getManager(id);
 	}
 	
 }

@@ -5,7 +5,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import project.model.Project;
+import project.service.EmployeeService;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,7 +18,10 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class ProjectDeserializer extends JsonDeserializer<Project> {
-
+	
+	@Autowired
+	private EmployeeService employeeService;
+	
 	@Override
 	public Project deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
 			throws IOException, JsonProcessingException {
@@ -44,7 +50,9 @@ public class ProjectDeserializer extends JsonDeserializer<Project> {
 				e.printStackTrace();
 			}
 		}if(jsonNode.has("status"))
-			project.setStatus(jsonNode.get("status").asText());		
+			project.setStatus(jsonNode.get("status").asText());	
+		if (jsonNode.has("managerId"))
+			project.setManager(employeeService.getEmployee(jsonNode.get("managerId").asLong()));
 		return project;
 	}
 	

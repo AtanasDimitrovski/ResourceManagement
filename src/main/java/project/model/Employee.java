@@ -34,6 +34,10 @@ public class Employee extends BaseEntity implements Serializable {
 	@JsonBackReference
 	private List<Effort> efforts = new ArrayList<Effort>();
 	
+	@OneToMany(mappedBy = "manager")
+	@JsonBackReference
+	private List<Project> projectManaged;
+	
 	public Employee(){
 		
 	}
@@ -76,6 +80,14 @@ public class Employee extends BaseEntity implements Serializable {
 	
 	public void setEfforts(List<Effort> efforts) {
 		this.efforts = efforts;
+	}
+
+	public List<Project> getProjectManaged() {
+		return projectManaged;
+	}
+
+	public void setProjectManaged(List<Project> projectManaged) {
+		this.projectManaged = projectManaged;
 	}
 	
 	

@@ -47,7 +47,7 @@ public class ProjectResource {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void update(@PathVariable long id, @RequestBody Project project){
-		projectService.editProject(id, project.getName(), project.getDescription(), project.getFromDate(), project.getToDate(), project.getStatus());
+		projectService.editProject(id, project.getName(), project.getDescription(), project.getFromDate(), project.getToDate(), project.getStatus(), project.getManager());
 	}
 		
 	@RequestMapping(value = "/{id}/employees", method = RequestMethod.GET, produces = "application/json")
@@ -65,7 +65,10 @@ public class ProjectResource {
 		projectService.addEmployee(id, employeeId, percent);
 	}
 	
-	
+	@RequestMapping(value = "/{id}/manager", method = RequestMethod.GET, produces = "application/json")
+	public Employee changeManager(@PathVariable long id){
+		return projectService.getManager(id);
+	}
 	
 	
 }

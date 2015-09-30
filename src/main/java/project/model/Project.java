@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,6 +17,7 @@ import project.deserializers.ProjectDeserializer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
@@ -36,6 +39,11 @@ public class Project extends BaseEntity{
 	private String status;
 	
 	private short valid;
+	
+	@ManyToOne
+	@JoinColumn(name = "manager_id")
+	@JsonManagedReference
+	private Employee manager;
 	
 	public Project(){
 		
@@ -101,6 +109,14 @@ public class Project extends BaseEntity{
 
 	public void setEfforts(List<Effort> efforts) {
 		this.efforts = efforts;
+	}
+
+	public Employee getManager() {
+		return manager;
+	}
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
 	}
 	
 	
