@@ -68,6 +68,11 @@ public class EmployeeResource {
 		employeeService.addProject(id, projectId, percent);
 	}
 	
+	@RequestMapping(value = "/{id}/projects/manager", method = RequestMethod.GET, produces = "application/json")
+	public List<Project> getProjectsManged(@PathVariable long id){
+		return employeeService.getManagerProjects(id);
+	}
+	
 
 	
 }

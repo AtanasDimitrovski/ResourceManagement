@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import project.controller.EffortController;
 import project.controller.EmployeeController;
+import project.controller.ProjectController;
 import project.model.Effort;
 import project.model.Employee;
 import project.model.Project;
@@ -21,6 +22,7 @@ public class EmployeeService {
 	
 	@Autowired
 	private EffortController effortController;
+	
 	
 	
 	public Employee getEmployee(long id){
@@ -66,6 +68,10 @@ public class EmployeeService {
 	
 	public boolean addProject(long employeeId, long projectId, int percent){
 		return effortController.create(employeeId, projectId, percent);
+	}
+
+	public List<Project> getManagerProjects(long id) {
+		return employeeController.findOne(id).getProjectManaged();
 	}
 	
 }
