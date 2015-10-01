@@ -78,7 +78,6 @@ public class ProjectResource {
 	
 	@RequestMapping(value = "/{id}/employees/{employeeId}/effort", method = RequestMethod.POST)
 	public void addEffortInformation(@PathVariable long id, @PathVariable long employeeId, @RequestBody EffortInformation effortInformation){
-		System.out.println(effortInformation.getPercent());
 		projectService.addEffortInformation(id, employeeId, effortInformation);
 	}
 	

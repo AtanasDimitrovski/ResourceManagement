@@ -17,22 +17,40 @@ public class UserService {
 	@Autowired
 	private UserController userController;
 	
+	/**
+	 * Creates new user
+	 * @param user User
+	 * @return Created user
+	 */
 	public User create(User user){
 		short valid = 1;
 		user.setValid(valid);
 		return userController.save(user);
 	}
 	
+	/**
+	 * Deletes user with user id
+	 * @param id user id
+	 */
 	public void delete(long id){
 		User user = userController.findOne(id);
 		short valid = 0;
 		user.setValid(valid);
 	}
 	
+	/**
+	 * Gets user with user id
+	 * @param id user id
+	 * @return User
+	 */
 	public User get(long id){
 		return userController.findOne(id);
 	}
 	
+	/**
+	 * Gets all users 
+	 * @return List of users
+	 */
 	public List<User> getAll(){
 		return userController.findAll();
 	}
