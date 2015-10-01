@@ -56,4 +56,9 @@ public class ProjectController extends BaseController<Project, JpaRepository<Pro
 			return null;
 		}
 	}
+	
+	public List<Project> findProjectByManager(long id){
+		short valid = 1;
+		return projectDao.findByValidAndManagerId(valid, id);
+	}
 }

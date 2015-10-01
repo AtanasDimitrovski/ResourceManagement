@@ -23,6 +23,9 @@ public class EmployeeService {
 	@Autowired
 	private EffortController effortController;
 	
+	@Autowired
+	private ProjectController projectController;
+	
 	
 	/**
 	 * Gets employee with employee id
@@ -116,7 +119,7 @@ public class EmployeeService {
 	 * @return list od projects
 	 */
 	public List<Project> getManagerProjects(long id) {
-		return employeeController.findOne(id).getProjectManaged();
-	}
+		return projectController.findProjectByManager(id);
+	} 
 	
 }

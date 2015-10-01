@@ -174,5 +174,9 @@ public class ProjectService {
 		}
 		return effortInformations;
 	}
+
+	public void editEffortInformation(long id, EffortInformation effortInformation) {
+		effortInformationController.edit(id, effortInformation);
+	}
 	
 }

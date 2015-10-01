@@ -81,6 +81,11 @@ public class ProjectResource {
 		projectService.addEffortInformation(id, employeeId, effortInformation);
 	}
 	
+	@RequestMapping(value = "/effort/{id}", method = RequestMethod.PUT)
+	public void editEffortInformation(@PathVariable long id, @RequestBody EffortInformation effortInformation){
+		projectService.editEffortInformation(id, effortInformation);
+	}
+	
 	@RequestMapping(value = "/{id}/employees/effort")
 	public List<EffortInformation> getAllEffortInformationForProject(@PathVariable long id){
 		return projectService.getEffortInformationsForProject(id);
