@@ -17,32 +17,24 @@ public class UserService {
 	@Autowired
 	private UserController userController;
 	
-	public boolean create(String username, String password){
-		return userController.create(username, password);
+	public User create(User user){
+		short valid = 1;
+		user.setValid(valid);
+		return userController.save(user);
 	}
 	
-	public boolean delete(long id){
-		return userController.delete(id);
-	}
-	
-	public boolean changePassword(long id, String password){
-		return userController.changePassword(id, password);
-	}
-	
-	public boolean changeRole(long id, Role role){
-		return userController.changeRole(id, role);
-	}
-	
-	public boolean changeUsername(long id, String username){
-		return userController.changeUsername(id, username);
+	public void delete(long id){
+		User user = userController.findOne(id);
+		short valid = 0;
+		user.setValid(valid);
 	}
 	
 	public User get(long id){
-		return userController.get(id);
+		return userController.findOne(id);
 	}
 	
 	public List<User> getAll(){
-		return userController.getAll();
+		return userController.findAll();
 	}
 	
 }

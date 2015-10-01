@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,65 +14,15 @@ import project.model.User;
 import project.model.User.Role;
 
 @Controller
-public class UserController {
+public class UserController extends BaseController<User, JpaRepository<User,Long>> {
 	
 	
 	@Autowired
 	private UserDao userDao;
-
-	public boolean create(String username, String password){
-				
-		try {
-			
-			User user = new User();
-			user.setUsername(username);
-			user.setPassword(password);
-			user.setRole(User.Role.ROLE_USER);
-			userDao.save(user);
-			
-		} catch (Exception e) {
-			return false;
-		}
-		
-		return true;
-	}
 	
-	public boolean delete(long id){
-				
-		try {
-			User user = userDao.getOne(id);
-			short valid = 0;
-			user.setValid(valid);
-			userDao.saveAndFlush(user);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean changeUsername(long id, String username){
-		try {
-			User user = userDao.getOne(id);
-			user.setUsername(username);
-			userDao.saveAndFlush(user);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean changePassword(long id, String password){
-		try {
-			User user = userDao.getOne(id);
-			user.setPassword(password);
-			userDao.saveAndFlush(user);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-		return true;
+	@Override
+	protected JpaRepository<User, Long> getDao() {
+		return userDao;
 	}
 	
 	public boolean changeRole(long id, Role role){
@@ -85,21 +36,5 @@ public class UserController {
 		}
 		return true;
 	}
-	
-	public User get(long id){	
-		try {
-			return userDao.getOne(id);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return null;
-		}
-	}
-	
-	public List<User> getAll(){
-		try {
-			return userDao.findAll();
-		} catch (Exception e) {
-			return new ArrayList<User>();
-		}
-	}
+
 }

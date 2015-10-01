@@ -4,9 +4,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,14 +12,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.model.User;
 import project.security.TokenTransfer;
 import project.security.TokenUtils;
+import project.service.UserService;
 
 @RestController
 public class UserResource {
@@ -31,6 +31,9 @@ public class UserResource {
 	
 	@Autowired
 	private UserDetailsService userService;
+	
+	@Autowired
+	private UserService service;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -71,5 +74,10 @@ public class UserResource {
 		cookie.setPath(request.getContextPath());
 		response.addCookie(cookie);
 		return new TokenTransfer(TokenUtils.createToken(userDetails));
+	}
+
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	public void singUp(@RequestBody User user){
+		service.create(user);
 	}
 }

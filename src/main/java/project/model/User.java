@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,7 +31,11 @@ public class User extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "user_role", length = 20, nullable = false)
 	private Role role;
-
+	
+	@OneToOne
+	@JoinColumn(name = "employee_id")
+	private Employee employee;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -60,8 +67,14 @@ public class User extends BaseEntity {
 	public void setValid(short valid) {
 		this.valid = valid;
 	}
-	
-	
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 	
 	
 }

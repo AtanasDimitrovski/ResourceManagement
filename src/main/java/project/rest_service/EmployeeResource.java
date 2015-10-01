@@ -38,17 +38,17 @@ public class EmployeeResource {
 		return employeeService.getEmployee(id);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void deleteEmployee(@PathVariable long id){
 		employeeService.deleteEmployee(id);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST)
 	public void createEmployee(@RequestBody Employee employee){
 		employeeService.createEmployee(employee);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void editEmployee(@PathVariable long id, @RequestBody Employee employee){
 		employeeService.editEmployee(id, employee.getName(), employee.getLastName(), employee.getJobDescription());
 	}
@@ -63,7 +63,7 @@ public class EmployeeResource {
 		employeeService.removeProject(id, projectId);
 	}
 	
-	@RequestMapping(value = "/{id}/projects", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/{id}/projects", method = RequestMethod.POST)
 	public void addProject(@PathVariable long id, @RequestParam("projectId") long projectId, @RequestParam("percent") int percent){
 		employeeService.addProject(id, projectId, percent);
 	}

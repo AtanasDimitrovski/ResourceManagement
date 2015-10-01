@@ -28,6 +28,9 @@ public class ProjectService {
 	@Autowired
 	private EffortInformationController effortInformationController;
 	
+	@Autowired
+	private EffortService effortService;
+	
 	
 	public Project getProject(long id){
 		return projectController.findOne(id);
@@ -86,8 +89,12 @@ public class ProjectService {
 	public void addEffortInformation(long id, long employeeId,
 			EffortInformation effortInformation) {
 		 Effort effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
-		 effortInformation.setEffort(effort);
-		 effortInformationController.save(effortInformation);
+		 if (effort == null){
+			 if(effortService.create(employeeId, id, 20))
+				 effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
+				 effortInformation.setEffort(effort);
+				 effortInformationController.save(effortInformation);
+		 }
 	}
 	
 }

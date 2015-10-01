@@ -36,12 +36,12 @@ public class ProjectResource {
 		return projectService.getProject(id);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id){
 		projectService.delete(id);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST)
 	public void create(@RequestBody Project project){
 		projectService.createProject(project);
 	}
@@ -61,7 +61,7 @@ public class ProjectResource {
 		projectService.removeEmployee(id, employeeId);
 	}
 	
-	@RequestMapping(value = "/{id}/employees", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/{id}/employees", method = RequestMethod.POST)
 	public void addEmployee(@PathVariable long id, @RequestParam("employeeId") long employeeId, @RequestParam("percent") int percent){
 		projectService.addEmployee(id, employeeId, percent);
 	}
