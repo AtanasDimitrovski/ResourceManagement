@@ -25,6 +25,14 @@ public class UserController extends BaseController<User, JpaRepository<User,Long
 		return userDao;
 	}
 	
+	public User findByUsername(String username){
+		try {
+			return userDao.findByUsername(username);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	public boolean changeRole(long id, Role role){
 		try {
 			User user = userDao.getOne(id);

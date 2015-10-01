@@ -62,8 +62,8 @@ public class ProjectResource {
 	}
 	
 	@RequestMapping(value = "/{id}/employees", method = RequestMethod.POST)
-	public void addEmployee(@PathVariable long id, @RequestParam("employeeId") long employeeId, @RequestParam("percent") int percent){
-		projectService.addEmployee(id, employeeId, percent);
+	public void addEmployee(@PathVariable long id, @RequestParam("employeeId") long employeeId){
+		projectService.addEmployee(id, employeeId);
 	}
 	
 	@RequestMapping(value = "/{id}/manager", method = RequestMethod.GET, produces = "application/json")
@@ -79,6 +79,11 @@ public class ProjectResource {
 	@RequestMapping(value = "/{id}/employees/{employeeId}/effort", method = RequestMethod.POST)
 	public void addEffortInformation(@PathVariable long id, @PathVariable long employeeId, @RequestBody EffortInformation effortInformation){
 		projectService.addEffortInformation(id, employeeId, effortInformation);
+	}
+	
+	@RequestMapping(value = "/{id}/employees/effort")
+	public List<EffortInformation> getAllEffortInformationForProject(@PathVariable long id){
+		return projectService.getEffortInformationsForProject(id);
 	}
 	
 }

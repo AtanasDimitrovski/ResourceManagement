@@ -13,7 +13,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
+/**
+ * The Effort class represent an employee working on a project.
+ * @author Atanas Dimitrovski
+ *
+ */
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Effort extends BaseEntity implements Serializable {
@@ -29,7 +33,6 @@ public class Effort extends BaseEntity implements Serializable {
 	@JsonManagedReference
 	private Employee employee;
 	
-	private int percent;
 	
 	@OneToMany(mappedBy = "effort")
 	@JsonBackReference
@@ -54,17 +57,6 @@ public class Effort extends BaseEntity implements Serializable {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-	}
-
-	public int getPercent() {
-		return percent;
-	}
-
-	public void setPercent(int percent) {
-		this.percent = percent;
-	}
-	
-	
-	
+	}	
 	
 }

@@ -104,11 +104,10 @@ public class EmployeeService {
 	 * Sets employee with employee id to work on project with project id 
 	 * @param employeeId employee id
 	 * @param projectId project id
-	 * @param percent
 	 * @return True if employee set, false otherwise
 	 */
-	public boolean addProject(long employeeId, long projectId, int percent){
-		return effortController.create(employeeId, projectId, percent);
+	public boolean addProject(long employeeId, long projectId){
+		return effortController.create(employeeId, projectId);
 	}
 	
 	/**

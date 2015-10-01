@@ -55,6 +55,10 @@ public class UserService {
 		return userController.findAll();
 	}
 	
+	public User findByUsername(String username){
+		return userController.findByUsername(username);
+	}
+	
 }
 
 

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 import project.model.Employee;
 import project.model.Project;
+import project.model.User;
 import project.service.EmployeeService;
+import project.service.UserService;
 
 @RestController
 @RequestMapping(value = "/data/employees")
@@ -27,6 +25,9 @@ public class EmployeeResource {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public List<Employee> getEmployees(){
@@ -64,8 +65,8 @@ public class EmployeeResource {
 	}
 	
 	@RequestMapping(value = "/{id}/projects", method = RequestMethod.POST)
-	public void addProject(@PathVariable long id, @RequestParam("projectId") long projectId, @RequestParam("percent") int percent){
-		employeeService.addProject(id, projectId, percent);
+	public void addProject(@PathVariable long id, @RequestParam("projectId") long projectId){
+		employeeService.addProject(id, projectId);
 	}
 	
 	@RequestMapping(value = "/{id}/projects/manager", method = RequestMethod.GET, produces = "application/json")
@@ -73,6 +74,15 @@ public class EmployeeResource {
 		return employeeService.getManagerProjects(id);
 	}
 	
+	@RequestMapping(value = "/user")
+	public Employee getEmployeeFromUser(HttpServletRequest request){
+		String[] split = request.getHeader("Authorization").split(" ");
+		byte[] info = Base64Utils.decode(split[1].getBytes());
+		String userPass = new String(info);
+		split = userPass.split(":");
+		User user = userService.findByUsername(split[0]);
+		return user.getEmployee();
+	}
 
 	
 }

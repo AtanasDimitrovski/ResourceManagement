@@ -19,6 +19,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+/**
+ * The EffortInformation class represent information about the effort of the
+ * employee that works on the given project.
+ * <p>
+ * It gives information about: How much a day is the employee working on the
+ * project from one date to another, and what role has the employee on the project.
+ * 
+ * @author Atanas Dimitrovski
+ *
+ */
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @JsonDeserialize(using = EffortInformationDeserializer.class)

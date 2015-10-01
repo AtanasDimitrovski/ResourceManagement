@@ -7,4 +7,5 @@ import project.model.User;
 public interface UserDao extends JpaRepository<User, Long> {
 	
 	public User findByUsername(String username);
+	
 }

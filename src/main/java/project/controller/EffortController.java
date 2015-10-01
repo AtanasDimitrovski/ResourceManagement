@@ -39,7 +39,7 @@ public class EffortController extends BaseController<Effort, JpaRepository<Effor
 	}
 
 	
-	public boolean create(long employeeId, long projectId, int percent){
+	public boolean create(long employeeId, long projectId){
 		
 		try {
 			
@@ -50,7 +50,6 @@ public class EffortController extends BaseController<Effort, JpaRepository<Effor
 			
 			effort.setEmployee(employeeDao.getOne(employeeId));
 			effort.setProject(projectDao.getOne(projectId));
-			effort.setPercent(percent);
 			super.save(effort);
 			
 		} catch (Exception e) {
@@ -85,17 +84,6 @@ public class EffortController extends BaseController<Effort, JpaRepository<Effor
 		return true;
 	}
 
-	public boolean updatePercent(long id, int percent){
-		try {
-			Effort effort = effortDao.getOne(id);
-			effort.setPercent(percent);
-			super.saveAndFlush(effort);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-		return true;
-	}
 
 	
 	public List<Effort> getProjectsByEmployeeId(long id){

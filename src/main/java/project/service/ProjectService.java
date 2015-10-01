@@ -117,8 +117,8 @@ public class ProjectService {
 	 * @param percent
 	 * @return true if employee was added, false otherwise
 	 */
-	public boolean addEmployee(long projectId, long employeeId, int percent){
-		return effortController.create(employeeId, projectId, percent);
+	public boolean addEmployee(long projectId, long employeeId){
+		return effortController.create(employeeId, projectId);
 	}
 
 	/**
@@ -151,13 +151,28 @@ public class ProjectService {
 			EffortInformation effortInformation) {
 		 Effort effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
 		 if (effort == null){
-			 if(effortService.create(employeeId, id, 20))
+			 if(effortService.create(employeeId, id))
 				 effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
 		 }
 		 if (effort != null){
 			 effortInformation.setEffort(effort);
 			 effortInformationController.save(effortInformation);
 		 }
+	}
+	
+	/**
+	 * Gets all effort informations for project with project id
+	 * @param id project id
+	 * @return List od Effort information
+	 */
+	public List<EffortInformation> getEffortInformationsForProject(long id) {
+		// TODO Auto-generated method stub
+		List<Effort> efforts = effortController.getEmployeesByProjectId(id);
+		List<EffortInformation> effortInformations = new ArrayList<EffortInformation>();
+		for (Effort effort : efforts) {
+			effortInformations.addAll(effortInformationController.getEffortInformationByEffortId(effort.getId()));
+		}
+		return effortInformations;
 	}
 	
 }

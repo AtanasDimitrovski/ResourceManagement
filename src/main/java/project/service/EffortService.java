@@ -44,11 +44,10 @@ public class EffortService {
 	 * Sets employee with employee id to work on project with project id. Creates effort
 	 * @param employeeId employee id
 	 * @param projectId project id
-	 * @param percent 
 	 * @return True if effort created, false otherwise
 	 */
-	public boolean create(long employeeId, long projectId, int percent){
-		return effortController.create(employeeId, projectId, percent);
+	public boolean create(long employeeId, long projectId){
+		return effortController.create(employeeId, projectId);
 	}
 	
 	/**
@@ -70,9 +69,6 @@ public class EffortService {
 	public boolean changeProject(long effortId, long projectId){
 		return effortController.changeProject(projectId, effortId);
 	}
-	
-	public boolean changePercent(long id, int percent){
-		return effortController.updatePercent(id, percent);
-	}
+
 	
 }

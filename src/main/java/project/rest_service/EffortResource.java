@@ -36,8 +36,8 @@ public class EffortResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void create(@RequestParam("projectId") long projectId, @RequestParam("employeeId") long employeeId, @RequestParam("percent") int percent ){
-		effortService.create(employeeId, projectId, percent);
+	public void create(@RequestParam("projectId") long projectId, @RequestParam("employeeId") long employeeId){
+		effortService.create(employeeId, projectId);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = "employeeId")
@@ -49,10 +49,4 @@ public class EffortResource {
 	public void changeProject(@PathVariable long id, @RequestParam("projectId") long projectId){
 		effortService.changeProject(id, projectId);
 	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = "percent")
-	public void changePercent(@PathVariable long id, @RequestParam("percent") int percent){
-		effortService.changePercent(id, percent);
-	}
-	
 }
