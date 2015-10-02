@@ -1,4 +1,4 @@
-package project.rest_service;
+/*package project.rest_service;
 
 import java.util.List;
 
@@ -50,3 +50,4 @@ public class EffortResource {
 		effortService.changeProject(id, projectId);
 	}
 }
+*/

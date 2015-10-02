@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import project.controller.EffortController;
 import project.controller.EffortInformationController;
+import project.controller.EmployeeController;
 import project.controller.ProjectController;
 import project.model.Effort;
 import project.model.EffortInformation;
@@ -29,7 +30,8 @@ public class ProjectService {
 	private EffortInformationController effortInformationController;
 	
 	@Autowired
-	private EffortService effortService;
+	private EmployeeController employeeController;
+	
 	
 	/**
 	 * Gets project with project id 
@@ -82,7 +84,20 @@ public class ProjectService {
 	 * @return edited project
 	 */
 	public Project editProject(long id, String name, String description, Date fromDate, Date toDate, String status, Employee manager){
-		return projectController.edit(id, name, description, fromDate, toDate, status, manager);
+		Project project = projectController.findOne(id);
+		if (name != null)
+			project.setName(name);
+		if (description != null)
+			project.setDescription(description);
+		if (fromDate != null)
+			project.setFromDate(fromDate);
+		if (toDate != null)
+			project.setToDate(toDate);
+		if (status != null)
+			project.setStatus(status);
+		if (manager != null)
+			project.setManager(manager);
+		return projectController.saveAndFlush(project);
 	}
 	
 	/**
@@ -91,7 +106,7 @@ public class ProjectService {
 	 * @return list of all employees working on the project
 	 */
 	public List<Employee> getEmployees(long id){
-		List<Effort> efforts = effortController.getEmployeesByProjectId(id);
+		List<Effort> efforts = effortController.getEffortsByProjectId(id);
 		List<Employee> employees = new ArrayList<Employee>();
 		for (Effort effort : efforts) {
 			if (effort.getEmployee().getValid() == 1)
@@ -117,8 +132,14 @@ public class ProjectService {
 	 * @param percent
 	 * @return true if employee was added, false otherwise
 	 */
-	public boolean addEmployee(long projectId, long employeeId){
-		return effortController.create(employeeId, projectId);
+	public Effort addEmployee(long projectId, long employeeId){
+		if (effortController.getEffortByProjectAndEmployee(projectId, employeeId) == null){
+			Effort effort = new Effort();
+			effort.setEmployee(employeeController.findOne(employeeId));
+			effort.setProject(projectController.findOne(projectId));
+			return effortController.save(effort);
+		}
+		return null;
 	}
 
 	/**
@@ -151,8 +172,7 @@ public class ProjectService {
 			EffortInformation effortInformation) {
 		 Effort effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
 		 if (effort == null){
-			 if(effortService.create(employeeId, id))
-				 effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
+			 effort = addEmployee(id, employeeId);
 		 }
 		 if (effort != null){
 			 effortInformation.setEffort(effort);
@@ -167,16 +187,30 @@ public class ProjectService {
 	 */
 	public List<EffortInformation> getEffortInformationsForProject(long id) {
 		// TODO Auto-generated method stub
-		List<Effort> efforts = effortController.getEmployeesByProjectId(id);
+		List<Effort> efforts = effortController.getEffortsByProjectId(id);
 		List<EffortInformation> effortInformations = new ArrayList<EffortInformation>();
 		for (Effort effort : efforts) {
 			effortInformations.addAll(effortInformationController.getEffortInformationByEffortId(effort.getId()));
 		}
 		return effortInformations;
 	}
-
+	
+	/**
+	 * Edits effort informations
+	 * @param id project id
+	 * @param effortInformation effort information
+	 */
 	public void editEffortInformation(long id, EffortInformation effortInformation) {
-		effortInformationController.edit(id, effortInformation);
+		EffortInformation effortInfo = effortInformationController.findOne(id);
+		if (effortInformation.getFromDate() != null)
+			effortInfo.setFromDate(effortInformation.getFromDate());
+		if (effortInformation.getToDate() != null)
+			effortInfo.setToDate(effortInformation.getToDate());
+		if (effortInformation.getPercent() != 0)
+			effortInfo.setPercent(effortInformation.getPercent());
+		if (effortInformation.getRole() != null)
+			effortInfo.setRole(effortInformation.getRole());
+		effortInformationController.saveAndFlush(effortInfo);
 	}
 	
 }

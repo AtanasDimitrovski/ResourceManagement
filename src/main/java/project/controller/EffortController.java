@@ -37,56 +37,8 @@ public class EffortController extends BaseController<Effort, JpaRepository<Effor
 			return null;
 		}
 	}
-
 	
-	public boolean create(long employeeId, long projectId){
-		
-		try {
-			
-			if (getEffortByProjectAndEmployee(projectId, employeeId) != null) return false;
-			
-			Effort effort = new Effort();
-			
-			
-			effort.setEmployee(employeeDao.getOne(employeeId));
-			effort.setProject(projectDao.getOne(projectId));
-			super.save(effort);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public boolean changeProject(long projectId, long effortId){
-		try {
-			Effort effort = effortDao.getOne(effortId);
-			effort.setProject(projectDao.getOne(projectId));
-			super.saveAndFlush(effort);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean changeEmployee(long employeId, long effortId){
-		try {
-			Effort effort = effortDao.getOne(effortId);
-			effort.setEmployee(employeeDao.getOne(employeId));
-			super.saveAndFlush(effort);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return false;
-		}
-		return true;
-	}
-
-
-	
-	public List<Effort> getProjectsByEmployeeId(long id){
+	public List<Effort> getEffortsByEmployeeId(long id){
 		try {
 			return effortDao.findByEmployeeId(id);
 		} catch (Exception e) {
@@ -94,7 +46,7 @@ public class EffortController extends BaseController<Effort, JpaRepository<Effor
 		}
 	}
 	
-	public List<Effort> getEmployeesByProjectId(long id){
+	public List<Effort> getEffortsByProjectId(long id){
 		try {
 			return effortDao.findByProjectId(id);
 		} catch (Exception e) {

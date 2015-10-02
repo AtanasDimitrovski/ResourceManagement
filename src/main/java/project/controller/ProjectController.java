@@ -34,28 +34,6 @@ public class ProjectController extends BaseController<Project, JpaRepository<Pro
 	public Employee getManager(long id){
 		return projectDao.findOne(id).getManager();
 	}
-
-	public Project edit(long id, String name, String description,
-			Date fromDate, Date toDate, String status, Employee manager) {
-		try {
-			Project project = projectDao.getOne(id);
-			if (name != null)
-				project.setName(name);
-			if (description != null)
-				project.setDescription(description);
-			if (fromDate != null)
-				project.setFromDate(fromDate);
-			if (toDate != null)
-				project.setToDate(toDate);
-			if (status != null)
-				project.setStatus(status);
-			if (manager != null)
-				project.setManager(manager);
-			return super.saveAndFlush(project);
-		} catch (Exception e) {
-			return null;
-		}
-	}
 	
 	public List<Project> findProjectByManager(long id){
 		short valid = 1;

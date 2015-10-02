@@ -23,21 +23,4 @@ public class EffortInformationController extends BaseController<EffortInformatio
 	public List<EffortInformation> getEffortInformationByEffortId(long id){
 		return effortInformationDao.findByEffortId(id);
 	}
-
-	public void edit(long id, EffortInformation effortInformation) {
-		try {
-			EffortInformation effortInfo = super.findOne(id);
-			if (effortInformation.getFromDate() != null)
-				effortInfo.setFromDate(effortInformation.getFromDate());
-			if (effortInformation.getToDate() != null)
-				effortInfo.setToDate(effortInformation.getToDate());
-			if (effortInformation.getPercent() != 0)
-				effortInfo.setPercent(effortInformation.getPercent());
-			if (effortInformation.getRole() != null)
-				effortInfo.setRole(effortInformation.getRole());
-			super.saveAndFlush(effortInfo);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
 }

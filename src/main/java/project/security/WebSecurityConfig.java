@@ -13,7 +13,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	  @Override
 	  protected void configure(HttpSecurity http) throws Exception {
-	    http.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/data/**").permitAll().
+		 http.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/data/**").permitAll().
 	    antMatchers("/user/authenticate").permitAll()
 	    .anyRequest().authenticated().and().
 	    httpBasic().and().

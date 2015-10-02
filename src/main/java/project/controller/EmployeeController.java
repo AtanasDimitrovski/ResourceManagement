@@ -27,17 +27,5 @@ public class EmployeeController extends BaseController<Employee, JpaRepository<E
 	public List<Employee> findAll() {
 		short valid = 1;
 		return employeeDao.findByValid(valid);
-	}
-	
-	public Employee edit(long id, String name, String lastName, String jobDescription){
-		Employee employee = super.findOne(id);
-		if (name != null)
-			employee.setName(name);
-		if (lastName != null)
-			employee.setLastName(lastName);
-		if (jobDescription != null)
-			employee.setJobDescription(jobDescription);
-		return super.saveAndFlush(employee);
-	}
-	
+	}	
 }

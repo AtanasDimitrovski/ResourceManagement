@@ -79,7 +79,14 @@ public class EmployeeService {
 	 * @return Edited employee
 	 */
 	public Employee editEmployee(long id, String name, String lastName, String jobDescription){
-		return employeeController.edit(id, name, lastName, jobDescription);
+		Employee employee = employeeController.findOne(id);
+		if (name != null)
+			employee.setName(name);
+		if (lastName != null)
+			employee.setLastName(lastName);
+		if (jobDescription != null)
+			employee.setJobDescription(jobDescription);
+		return employeeController.saveAndFlush(employee);
 	}
 	
 	/**
@@ -88,7 +95,7 @@ public class EmployeeService {
 	 * @return list od projects
 	 */
 	public List<Project> getProjects(long id){
-		List<Effort> efforts = effortController.getProjectsByEmployeeId(id);
+		List<Effort> efforts = effortController.getEffortsByEmployeeId(id);
 		List<Project> projects = new ArrayList<Project>();
 		for (Effort effort : efforts) {
 			if (effort.getProject().getValid() == 1)
@@ -113,8 +120,14 @@ public class EmployeeService {
 	 * @param projectId project id
 	 * @return True if employee set, false otherwise
 	 */
-	public boolean addProject(long employeeId, long projectId){
-		return effortController.create(employeeId, projectId);
+	public void addProject(long employeeId, long projectId){
+		
+		if (effortController.getEffortByProjectAndEmployee(projectId, employeeId) == null){
+			Effort effort = new Effort();
+			effort.setEmployee(employeeController.findOne(employeeId));
+			effort.setProject(projectController.findOne(projectId));
+			effortController.save(effort);
+		}
 	}
 	
 	/**
@@ -132,7 +145,7 @@ public class EmployeeService {
 	 * @return list of effort information
 	 */
 	public List<EffortInformation> getEffortInformation(long id) {
-		List<Effort> efforts = effortController.getProjectsByEmployeeId(id);
+		List<Effort> efforts = effortController.getEffortsByEmployeeId(id);
 		List<EffortInformation> effortInfos = new ArrayList<EffortInformation>();
 		for (Effort effort : efforts) {
 			effortInfos.addAll(effortInformationController.getEffortInformationByEffortId(effort.getId()));
