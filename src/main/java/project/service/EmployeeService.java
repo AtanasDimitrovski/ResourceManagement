@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.controller.EffortController;
+import project.controller.EffortInformationController;
 import project.controller.EmployeeController;
 import project.controller.ProjectController;
 import project.model.Effort;
+import project.model.EffortInformation;
 import project.model.Employee;
 import project.model.Project;
 
@@ -26,6 +28,8 @@ public class EmployeeService {
 	@Autowired
 	private ProjectController projectController;
 	
+	@Autowired
+	private EffortInformationController effortInformationController;
 	
 	/**
 	 * Gets employee with employee id
@@ -120,6 +124,20 @@ public class EmployeeService {
 	 */
 	public List<Project> getManagerProjects(long id) {
 		return projectController.findProjectByManager(id);
+	}
+	
+	/**
+	 * Get all effort information about employee with given id
+	 * @param id employee id
+	 * @return list of effort information
+	 */
+	public List<EffortInformation> getEffortInformation(long id) {
+		List<Effort> efforts = effortController.getProjectsByEmployeeId(id);
+		List<EffortInformation> effortInfos = new ArrayList<EffortInformation>();
+		for (Effort effort : efforts) {
+			effortInfos.addAll(effortInformationController.getEffortInformationByEffortId(effort.getId()));
+		}
+		return effortInfos;
 	} 
 	
 }
