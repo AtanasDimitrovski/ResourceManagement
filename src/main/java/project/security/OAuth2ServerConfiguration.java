@@ -79,6 +79,7 @@ public class OAuth2ServerConfiguration {
 
 		@Autowired
 		private UserDetailService userDetailsService;
+		
 
 		@Override
 		public void configure(AuthorizationServerEndpointsConfigurer endpoints)
