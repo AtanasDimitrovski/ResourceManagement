@@ -10,7 +10,12 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.2.5.RELEASE</version>
     </parent>
-  
+    
+        <properties>
+        <java.version>1.8</java.version>
+        <spring-security-oauth2.version>2.0.7.RELEASE</spring-security-oauth2.version>
+    </properties>
+
   <dependencies>
   <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -27,9 +32,46 @@
   <dependency>
 	<groupId>com.google.code.gson</groupId>
 	<artifactId>gson</artifactId>
-	<version>2.3.1</version>
-</dependency>
-  
+	</dependency>
+  	
+  	<!-- OAUTH2 -->
+  	
+ 		
+ 		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>${spring-security-oauth2.version}</version>
+		</dependency>
+ 		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path-assert</artifactId>
+			<version>0.9.1</version>
+			<scope>test</scope>
+		</dependency>
+  	
+  	<!-- END OAUTH2 -->
+  	
+  	
      <dependency>
        <groupId>org.springframework.boot</groupId>
        <artifactId>spring-boot-starter-test</artifactId>
@@ -43,9 +85,7 @@
 </dependencies>
 
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+
 
 
     <build>
@@ -57,5 +97,18 @@
         </plugins>
     </build>
   
+  	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-plugin-releases</id>
+			<url>https://repo.spring.io/plugins-release</url>
+		</pluginRepository>
+	</pluginRepositories>
   
 </project>
