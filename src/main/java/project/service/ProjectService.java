@@ -1,10 +1,19 @@
 package project.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.token.TokenService;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.stereotype.Service;
 
 import project.controller.EffortController;
@@ -53,8 +62,9 @@ public class ProjectService {
 	/**
 	 * Deletes project with project id
 	 * @param id project id
+	 * @throws IOException 
 	 */
-	public void delete(long id){
+	public void delete(long id, HttpServletResponse response) {
 		Project project = projectController.findOne(id);
 		short valid = 0;
 		project.setValid(valid);
@@ -212,5 +222,7 @@ public class ProjectService {
 			effortInfo.setRole(effortInformation.getRole());
 		effortInformationController.saveAndFlush(effortInfo);
 	}
+	
+	
 	
 }
