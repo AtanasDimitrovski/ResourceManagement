@@ -1,4 +1,4 @@
-/*package project.rest_service;
+package project.rest_service;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class EffortResource {
 		effortService.create(employeeId, projectId);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = "employeeId")
+/*	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = "employeeId")
 	public void changeEmployee(@PathVariable long id, @RequestParam("employeeId") long employeeId){
 		effortService.changeEmployee(id, employeeId);
 	}
@@ -48,6 +48,5 @@ public class EffortResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = "projectId")
 	public void changeProject(@PathVariable long id, @RequestParam("projectId") long projectId){
 		effortService.changeProject(id, projectId);
-	}
+	}*/
 }
-*/
