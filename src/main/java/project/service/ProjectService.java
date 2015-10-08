@@ -24,6 +24,7 @@ import project.model.Effort;
 import project.model.EffortInformation;
 import project.model.Employee;
 import project.model.Project;
+import project.model.temp.EmployeeEffort;
 
 @Service
 public class ProjectService {
@@ -169,6 +170,7 @@ public class ProjectService {
 	 */
 	public List<EffortInformation> getEffortInformation(long id, long employeeId){
 		Effort effort = effortController.getEffortByProjectAndEmployee(id, employeeId);
+		if (effort == null) return null;
 		return effortInformationController.getEffortInformationByEffortId(effort.getId());
 	}
 
@@ -193,16 +195,20 @@ public class ProjectService {
 	/**
 	 * Gets all effort informations for project with project id
 	 * @param id project id
-	 * @return List od Effort information
+	 * @return List of Effort information
 	 */
-	public List<EffortInformation> getEffortInformationsForProject(long id) {
+	public List<EmployeeEffort> getEffortInformationsForProject(long id) {
 		// TODO Auto-generated method stub
 		List<Effort> efforts = effortController.getEffortsByProjectId(id);
 		List<EffortInformation> effortInformations = new ArrayList<EffortInformation>();
 		for (Effort effort : efforts) {
 			effortInformations.addAll(effortInformationController.getEffortInformationByEffortId(effort.getId()));
 		}
-		return effortInformations;
+		List<EmployeeEffort> result = new ArrayList<EmployeeEffort>();
+		for (EffortInformation effortInfo : effortInformations) {
+			result.add(new EmployeeEffort(effortInfo));
+		}
+		return result;
 	}
 	
 	/**
@@ -223,6 +229,5 @@ public class ProjectService {
 		effortInformationController.saveAndFlush(effortInfo);
 	}
 	
-	
-	
+
 }

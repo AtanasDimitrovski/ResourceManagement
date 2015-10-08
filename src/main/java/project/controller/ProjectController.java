@@ -31,6 +31,12 @@ public class ProjectController extends BaseController<Project, JpaRepository<Pro
 		return projectDao.findByValid(valid);
 	}
 	
+	@Override
+	public Project findOne(Long id) {
+		short valid = 1;
+		return projectDao.findByIdAndValid(id, valid);
+	}
+	
 	public Employee getManager(long id){
 		return projectDao.findOne(id).getManager();
 	}

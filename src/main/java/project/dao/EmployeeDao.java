@@ -10,6 +10,6 @@ public interface EmployeeDao extends JpaRepository<Employee, Long> {
 	
 	public List<Employee> findByValid(short valid);
 	
-	
+	public Employee findByIdAndValid(long id, short valid);
 	
 }

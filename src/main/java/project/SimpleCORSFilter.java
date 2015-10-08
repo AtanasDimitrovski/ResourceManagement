@@ -35,7 +35,6 @@ public class SimpleCORSFilter implements Filter {
 	    } else {
 	        chain.doFilter(req, res);
 	    }
-//		/chain.doFilter(req, res);
 	}
 
 	public void init(FilterConfig filterConfig) {}

@@ -11,6 +11,7 @@ import project.dao.EffortDao;
 import project.dao.EmployeeDao;
 import project.dao.ProjectDao;
 import project.model.Effort;
+import project.model.Employee;
 
 @Controller
 public class EffortController extends BaseController<Effort, JpaRepository<Effort,Long>> {
@@ -53,5 +54,7 @@ public class EffortController extends BaseController<Effort, JpaRepository<Effor
 			return new ArrayList<Effort>();
 		}
 	}
+	
+
 	
 }

@@ -20,6 +20,7 @@ import project.model.EffortInformation;
 import project.model.Employee;
 import project.model.Project;
 import project.model.User;
+import project.model.User.Role;
 import project.service.EmployeeService;
 import project.service.UserService;
 
@@ -187,6 +188,22 @@ public class EmployeeResource {
 	public Employee getEmployeeFromUser(HttpServletResponse response) throws IOException{
 		try {
 			return userService.getLoggedInUser().getEmployee();
+		} catch (Exception e) {
+			response.sendError(HttpServletResponse.SC_ACCEPTED, e.getMessage().toString());
+			return null;
+		}
+	}
+	
+	/**
+	 * Gets role from currently logged in user
+	 * @param request http request
+	 * @return String Role
+	 * @throws IOException 
+	 */
+	@RequestMapping(value = "/user/role")
+	public Object getRoleFromUser(HttpServletResponse response) throws IOException{
+		try {
+			return userService.getLoggedInUser().getRole();
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_ACCEPTED, e.getMessage().toString());
 			return null;

@@ -27,5 +27,12 @@ public class EmployeeController extends BaseController<Employee, JpaRepository<E
 	public List<Employee> findAll() {
 		short valid = 1;
 		return employeeDao.findByValid(valid);
-	}	
+	}
+	
+	@Override
+	public Employee findOne(Long id) {
+		short valid = 1;
+		return employeeDao.findByIdAndValid(id, valid);
+	}
+	
 }

@@ -1,19 +1,11 @@
 package project.rest_service;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
 import project.model.EffortInformation;
 import project.model.Employee;
 import project.model.Project;
+import project.model.temp.EmployeeEffort;
 import project.service.ProjectService;
 
 @RestController
@@ -41,7 +28,7 @@ public class ProjectResource {
 	
 	/**
 	 * Gets all projects
-	 * @return List od projects JSON
+	 * @return List of projects JSON
 	 * @throws IOException 
 	 */
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
@@ -63,10 +50,13 @@ public class ProjectResource {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
 	public Project getProject(@PathVariable long id, HttpServletResponse response) throws IOException{
-		Project project = projectService.getProject(id);
-		if (project==null)
-			response.sendError(HttpServletResponse.SC_ACCEPTED, "Project with ID=" + id + " doesn't exist");
-		return project;
+		try{
+		return projectService.getProject(id);
+		}
+		catch(Exception e){
+			response.sendError(HttpServletResponse.SC_ACCEPTED, e.getMessage().toString());
+			return null;
+		}
 	}
 	
 	/**
@@ -240,7 +230,7 @@ public class ProjectResource {
 	 * @throws IOException 
 	 */
 	@RequestMapping(value = "/{id}/employees/effort")
-	public List<EffortInformation> getAllEffortInformationForProject(@PathVariable long id, HttpServletResponse response) throws IOException{
+	public List<EmployeeEffort> getAllEffortInformationForProject(@PathVariable long id, HttpServletResponse response) throws IOException{
 		try{
 			return projectService.getEffortInformationsForProject(id);
 		}
@@ -249,7 +239,6 @@ public class ProjectResource {
 			return null;
 		}
 	}
-	
 
 	
 }
