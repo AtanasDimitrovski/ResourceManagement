@@ -99,7 +99,7 @@ public class OAuth2ServerConfiguration {
 				.inMemory()
 					.withClient("clientapp")
 						.authorizedGrantTypes("password", "refresh_token")
-						.authorities("USER")
+						//.authorities("USER")
 						.scopes("read", "write")
 						.resourceIds(RESOURCE_ID)
 						.secret("123456");

@@ -34,7 +34,6 @@
 	<artifactId>gson</artifactId>
 	</dependency>
   	
-  	<!-- OAUTH2 -->
   	
  		
  		<dependency>
@@ -69,7 +68,6 @@
 			<scope>test</scope>
 		</dependency>
   	
-  	<!-- END OAUTH2 -->
   	
   	
      <dependency>
