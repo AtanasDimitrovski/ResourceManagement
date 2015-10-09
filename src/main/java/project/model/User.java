@@ -8,11 +8,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import project.deserializers.EmployeeDeserializer;
+import project.deserializers.UserDeserializer;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonDeserialize(using = UserDeserializer.class)
 public class User extends BaseEntity {
 	
 	

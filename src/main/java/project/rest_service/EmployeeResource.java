@@ -21,6 +21,7 @@ import project.model.Employee;
 import project.model.Project;
 import project.model.User;
 import project.model.User.Role;
+import project.model.temp.UserEmployeeWrapper;
 import project.service.EmployeeService;
 import project.service.UserService;
 
@@ -88,9 +89,11 @@ public class EmployeeResource {
 	 * @throws IOException 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public void createEmployee(@RequestBody Employee employee, HttpServletResponse response) throws IOException{
+	public void createEmployee(@RequestBody UserEmployeeWrapper wrapper, HttpServletResponse response) throws IOException{
 		try{
-			employeeService.createEmployee(employee);
+			Employee emp = wrapper.getEmployee();
+			User user = wrapper.getUser();
+			employeeService.createEmployee(emp, user);
 		}
 		catch(Exception e){
 			response.sendError(HttpServletResponse.SC_ACCEPTED, e.getMessage().toString());

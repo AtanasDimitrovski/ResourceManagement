@@ -35,6 +35,11 @@ public class EffortResource {
 		effortService.delete(id);
 	}
 	
+	@RequestMapping(value = "/effortInformation/{id}", method = RequestMethod.DELETE)
+	public void deleteEffortInfo(@PathVariable long id){
+		effortService.deleteEffortInformation(id);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public void create(@RequestParam("projectId") long projectId, @RequestParam("employeeId") long employeeId){
 		effortService.create(employeeId, projectId);

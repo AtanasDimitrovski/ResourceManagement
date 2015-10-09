@@ -33,6 +33,10 @@ public class UserController extends BaseController<User, JpaRepository<User,Long
 		}
 	}
 	
+	public User findByEmployeeId(long id){
+		return userDao.findByEmployeeId(id).get(0);
+	}
+	
 	public boolean changeRole(long id, Role role){
 		try {
 			User user = userDao.getOne(id);

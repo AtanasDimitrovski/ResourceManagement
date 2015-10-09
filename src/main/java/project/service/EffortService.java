@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.controller.EffortController;
+import project.controller.EffortInformationController;
 import project.controller.EmployeeController;
 import project.controller.ProjectController;
 import project.model.Effort;
@@ -22,6 +23,9 @@ public class EffortService {
 	
 	@Autowired
 	private ProjectController projectController;
+	
+	@Autowired
+	private EffortInformationController effortInformationController;
 	
 	/**
 	 * Gets all efforts (employee id, project id)
@@ -59,6 +63,10 @@ public class EffortService {
 		effort.setEmployee(employeeController.findOne(employeeId));
 		effort.setProject(projectController.findOne(projectId));
 		return effortController.save(effort);
+	}
+	
+	public void deleteEffortInformation(long id){
+		effortInformationController.delete(id);
 	}
 	
 /*	*//**

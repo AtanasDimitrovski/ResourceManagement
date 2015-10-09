@@ -10,10 +10,13 @@ import project.controller.EffortController;
 import project.controller.EffortInformationController;
 import project.controller.EmployeeController;
 import project.controller.ProjectController;
+import project.controller.UserController;
 import project.model.Effort;
 import project.model.EffortInformation;
 import project.model.Employee;
 import project.model.Project;
+import project.model.User;
+import project.model.User.Role;
 
 @Service
 public class EmployeeService {
@@ -30,6 +33,9 @@ public class EmployeeService {
 	
 	@Autowired
 	private EffortInformationController effortInformationController;
+	
+	@Autowired
+	private UserController userController;
 	
 	/**
 	 * Gets employee with employee id
@@ -56,7 +62,10 @@ public class EmployeeService {
 		Employee employee = employeeController.findOne(id);
 		short valid = 0;
 		employee.setValid(valid);
+		User user = userController.findByEmployeeId(id);
+		user.setValid(valid);
 		employeeController.saveAndFlush(employee);
+		userController.saveAndFlush(user);
 	}
 	
 	/**
@@ -64,10 +73,15 @@ public class EmployeeService {
 	 * @param employee employee
 	 * @return created employee
 	 */
-	public Employee createEmployee(Employee employee){
+	public Employee createEmployee(Employee employee, User user){
 		short a = 1;
 		employee.setValid(a);
-		return employeeController.save(employee);
+		user.setValid(a);
+		user.setRole(Role.ROLE_USER);
+		employee =  employeeController.save(employee);
+		user.setEmployee(employee);
+		user = userController.save(user);
+		return employee;
 	}
 	
 	/**

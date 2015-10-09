@@ -25,6 +25,8 @@ public class EmployeeEffort {
 	
 	private String jobDescription;
 	
+	private int percent;
+	
 	public EmployeeEffort(EffortInformation effortInfo){
 		effortInformationId = effortInfo.getId();
 		fromDate = effortInfo.getFromDate();
@@ -35,6 +37,7 @@ public class EmployeeEffort {
 		name = effortInfo.getEffort().getEmployee().getName();
 		lastName = effortInfo.getEffort().getEmployee().getLastName();
 		jobDescription = effortInfo.getEffort().getEmployee().getJobDescription();
+		percent = effortInfo.getPercent();
 	}
 	
 
@@ -108,6 +111,16 @@ public class EmployeeEffort {
 
 	public void setJobDescription(String jobDescription) {
 		this.jobDescription = jobDescription;
+	}
+
+
+	public int getPercent() {
+		return percent;
+	}
+
+
+	public void setPercent(int percent) {
+		this.percent = percent;
 	}
 	
 	
