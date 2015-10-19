@@ -23,4 +23,8 @@ public class EffortInformationController extends BaseController<EffortInformatio
 	public List<EffortInformation> getEffortInformationByEffortId(long id){
 		return effortInformationDao.findByEffortId(id);
 	}
+	
+	public void deleteByEffortInformation(long id){
+		effortInformationDao.deleteByEffortId(id);
+	}
 }

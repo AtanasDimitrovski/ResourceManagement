@@ -13,18 +13,10 @@ import project.service.UserService;
 @Controller
 public class MainController {
 
-	@Autowired
-	private UserService userService;
-	
-	
-	@Autowired 
-	private EmployeeService employeeService;
-	
-	@RequestMapping("/emp/{id}")
-	@ResponseBody
-	public String emp(@PathVariable long id){
-		
-		return employeeService.getEmployee(id).getName();
-	}
+	  @RequestMapping("/")
+	  @ResponseBody
+	    public String index() {
+	        return "Greetings from Spring Boot!";
+	    }
 	
 }	

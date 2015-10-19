@@ -65,7 +65,7 @@ public class ProjectService {
 	 * @param id project id
 	 * @throws IOException 
 	 */
-	public void delete(long id, HttpServletResponse response) {
+	public void delete(long id) {
 		Project project = projectController.findOne(id);
 		short valid = 0;
 		project.setValid(valid);
@@ -133,7 +133,8 @@ public class ProjectService {
 	 */
 	public void removeEmployee(long projectId, long employeeId){
 		Effort effort = effortController.getEffortByProjectAndEmployee(projectId, employeeId);
-		effortController.delete(effort);
+		effortInformationController.deleteByEffortInformation(effort.getId());
+		effortController.delete(effort.getId());
 	}
 	
 	/**
@@ -216,7 +217,7 @@ public class ProjectService {
 	 * @param id project id
 	 * @param effortInformation effort information
 	 */
-	public void editEffortInformation(long id, EffortInformation effortInformation) {
+	public EffortInformation editEffortInformation(long id, EffortInformation effortInformation) {
 		EffortInformation effortInfo = effortInformationController.findOne(id);
 		if (effortInformation.getFromDate() != null)
 			effortInfo.setFromDate(effortInformation.getFromDate());
@@ -226,7 +227,7 @@ public class ProjectService {
 			effortInfo.setPercent(effortInformation.getPercent());
 		if (effortInformation.getRole() != null)
 			effortInfo.setRole(effortInformation.getRole());
-		effortInformationController.saveAndFlush(effortInfo);
+		return effortInformationController.saveAndFlush(effortInfo);
 	}
 	
 

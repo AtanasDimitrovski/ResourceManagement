@@ -67,7 +67,7 @@ public class ProjectResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id, HttpServletResponse response) throws IOException{
 		try{
-			projectService.delete(id, response);
+			projectService.delete(id);
 		}
 		catch(Exception e){
 			response.sendError(HttpServletResponse.SC_ACCEPTED, e.getMessage().toString());

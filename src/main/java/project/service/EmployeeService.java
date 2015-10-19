@@ -125,6 +125,7 @@ public class EmployeeService {
 	 */
 	public void removeProject(long employeeId, long projectId){
 		Effort effort = effortController.getEffortByProjectAndEmployee(projectId, employeeId);
+		effortInformationController.deleteByEffortInformation(effort.getId());
 		effortController.delete(effort);
 	} 
 	
