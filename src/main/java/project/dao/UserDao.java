@@ -12,4 +12,6 @@ public interface UserDao extends JpaRepository<User, Long> {
 	
 	public List<User> findByEmployeeId(long id);
 	
+	public List<User> findByValid(short valid);
+	
 }
