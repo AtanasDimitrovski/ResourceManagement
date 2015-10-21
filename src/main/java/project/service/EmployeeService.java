@@ -135,13 +135,24 @@ public class EmployeeService {
 	 * @param projectId project id
 	 * @return True if employee set, false otherwise
 	 */
-	public void addProject(long employeeId, long projectId){
+	public boolean addProject(long employeeId, long projectId){
 		
 		if (effortController.getEffortByProjectAndEmployee(projectId, employeeId) == null){
 			Effort effort = new Effort();
-			effort.setEmployee(employeeController.findOne(employeeId));
-			effort.setProject(projectController.findOne(projectId));
-			effortController.save(effort);
+			Employee employee = employeeController.findOne(employeeId);
+			if (employee == null) return false;
+			effort.setEmployee(employee);
+			Project project = projectController.findOne(projectId);
+			if (project == null) return false;
+			effort.setProject(project);
+			effort = effortController.save(effort);
+			if (effort == null)
+				return false;
+			else
+				return true;
+		}
+		else{
+			return false;
 		}
 	}
 	

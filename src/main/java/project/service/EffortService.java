@@ -10,6 +10,8 @@ import project.controller.EffortInformationController;
 import project.controller.EmployeeController;
 import project.controller.ProjectController;
 import project.model.Effort;
+import project.model.Employee;
+import project.model.Project;
 
 @Service
 public class EffortService {
@@ -60,8 +62,12 @@ public class EffortService {
 	 */
 	public Effort create(long employeeId, long projectId){
 		Effort effort = new Effort();
-		effort.setEmployee(employeeController.findOne(employeeId));
-		effort.setProject(projectController.findOne(projectId));
+		Employee employee = employeeController.findOne(employeeId);
+		if (employee == null) return null;
+		effort.setEmployee(employee);
+		Project project = projectController.findOne(projectId);
+		if (project == null) return null;
+		effort.setProject(project);
 		return effortController.save(effort);
 	}
 	

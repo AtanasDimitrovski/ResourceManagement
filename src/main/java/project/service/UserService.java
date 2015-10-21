@@ -38,6 +38,7 @@ public class UserService {
 		User user = userController.findOne(id);
 		short valid = 0;
 		user.setValid(valid);
+		userController.saveAndFlush(user);
 	}
 	
 	/**

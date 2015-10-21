@@ -1,5 +1,4 @@
-package project;
-
+package project.securityTest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -21,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+import project.Application;
 import project.controller.ProjectController;
 import project.model.Project;
 
@@ -29,33 +29,32 @@ import project.model.Project;
 @WebAppConfiguration
 @IntegrationTest({"server.port=0"})
 @Sql(executionPhase = ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:create.sql")
-public class JunitTest {
+public class AuthenticationTest {
+	
 
     @Value("${local.server.port}")
     private int port;
 
-	private URL base;
-	private URL dataProject;
+	private URL dataProjects;
+	private URL dataEmployees;
 	private RestTemplate template;
 
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port + "/");
-		this.dataProject = new URL("http://localhost:" + port + "/data/projects");
+		this.dataProjects = new URL("http://localhost:" + port + "/data/projects");
+		this.dataEmployees = new URL("http://localhost:" + port + "/data/employees");
 		template = new TestRestTemplate();
-	}
-
-
-	@Test
-	public void getHello() throws Exception {
-		ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
-		assertThat(response.getBody(), equalTo("Greetings from Spring Boot!"));
 	}
 	
 	@Test
 	public void security(){
-		ResponseEntity<String> response = template.getForEntity(dataProject.toString(), String.class);
+		ResponseEntity<String> response = template.getForEntity(dataProjects.toString(), String.class);
+		System.out.println(response.getBody());
+		assertThat(response.getBody(), equalTo("{\"error\":\"unauthorized\",\"error_description\":\"Full authentication is required to access this resource\"}"));
+	
+		response = template.getForEntity(dataEmployees.toString(), String.class);
 		System.out.println(response.getBody());
 		assertThat(response.getBody(), equalTo("{\"error\":\"unauthorized\",\"error_description\":\"Full authentication is required to access this resource\"}"));
 	}
+	
 }

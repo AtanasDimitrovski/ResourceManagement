@@ -1,16 +1,13 @@
 package project.daoTest;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -20,9 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import project.Application;
 import project.dao.EmployeeDao;
-import project.dao.ProjectDao;
 import project.model.Employee;
-import project.model.Project;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)

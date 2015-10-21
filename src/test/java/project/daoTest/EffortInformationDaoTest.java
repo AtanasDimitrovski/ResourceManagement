@@ -112,6 +112,14 @@ public class EffortInformationDaoTest {
 		Assert.assertNotNull(effortInformation);
 		Assert.assertEquals(effort, effortInformation.getEffort());
 		
+		//DELETE
+		int size = dao.findAll().size();
+		dao.deleteByEffortId(effortId);
+		Assert.assertEquals(size-4, dao.findAll().size());
+		Assert.assertNull(dao.findOne(new Long(3)));
+		Assert.assertNull(dao.findOne(new Long(1)));
+		Assert.assertNull(dao.findOne(new Long(15)));
+		Assert.assertNull(dao.findOne(new Long(16)));
 	}
 }
 
